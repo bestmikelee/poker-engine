@@ -169,6 +169,7 @@ function getRanksAsObj(cards) {
 }
 
 module.exports = {
+    ranks,
     sortRanks,
     isFlush,
     isStraight,
