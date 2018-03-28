@@ -18,12 +18,13 @@ function strength(cards) {
     const uniqRanks = Object.keys(ranks);
     const sortedRanks = sortRanks(uniqRanks);
     sortedRanks.forEach(r => {
-        cardFreqObj[ranks[r]] = cardFreqObj[ranks[r]]
-            ? cardFreqObj[ranks[r]].push(r)
+        const freq = ranks[r];
+        cardFreqObj[freq] = cardFreqObj[freq]
+            ? cardFreqObj[freq].concat([r])
             : [r];
     });
     // in a seven card game holding two trips is possible, but this needs to be a full house
-    const boolStraight = isStraight(ranks);
+    const boolStraight = isStraight(uniqRanks);
     const suit = isFlush(cards);
 
     if (suit && boolStraight) {
@@ -118,10 +119,12 @@ function isStraight(uniqRanks) {
                 i + 4 === sortedRanks.length &&
                 sortedRanks[0] === 'A'
             ) {
-                return sortedRanks.slice(i, i + 3).push('A');
+                const partialSorted = sortedRanks.slice(i, i + 4);
+                partialSorted.push('A');
+                return partialSorted;
             }
             if (sortedRanks[i + 4] === rankOrder[orderIndex + 4]) {
-                return sortedRanks.slice(i, i + 4);
+                return sortedRanks.slice(i, i + 5);
             }
         }
     }
